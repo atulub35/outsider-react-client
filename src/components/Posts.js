@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
 import { API_URL } from '../config'
 import Modal from './Modal'
+console.log('Process env', process.env.NODE_ENV);
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
