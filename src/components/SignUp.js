@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/auth/register', {
+            const response = await axios.post(`${API_URL}/auth/register`, {
                 name: formData.name,
                 email: formData.email,
                 password: formData.password

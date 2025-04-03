@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Login = () => {
         setSuccess('');
 
         try {
-            const response = await axios.post('http://localhost:3000/auth/login', formData);
+            const response = await axios.post(`${API_URL}/auth/login`, formData);
             
             setSuccess('Login successful!');
             login(response.data.user, response.data.token);
