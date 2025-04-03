@@ -1,35 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { API_URL } from '../config';
+import useApi from '../hooks/useApi';
+
 const UsersList = () => {
+    const { loading, error, get } = useApi();
+    console.log('loading in users list', loading);
+    
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get(`${API_URL}/users`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                setUsers(response.data);
-                setLoading(false);
+                const data = await get('/users');
+                setUsers(data);
             } catch (error) {
-                setError(error.message);
-                setLoading(false);
+                console.error('Error fetching users:', error);
             }
         };
 
         fetchUsers();
-    }, []);
+    }, [get]);
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+            <div className="bg-white shadow rounded-lg">
+                <div className="px-6 py-4 border-b border-gray-200">
+                    <div className="h-6 w-48 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                    {[...Array(6)].map((_, index) => (
+                        <div
+                            key={index}
+                            className="bg-white border border-gray-200 rounded-lg p-6"
+                        >
+                            <div className="space-y-4">
+                                <div className="h-6 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+                                <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+                                <div className="flex items-center space-x-4">
+                                    <div className="h-8 w-8 bg-gray-200 rounded-full animate-pulse"></div>
+                                    <div className="h-4 bg-gray-200 rounded w-24 animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }

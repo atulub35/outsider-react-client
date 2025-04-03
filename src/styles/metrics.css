@@ -1,0 +1,102 @@
+.metrics-counter {
+    position: relative;
+    height: 2.5rem;
+    overflow: hidden;
+    perspective: 500px;
+}
+
+.metrics-number {
+    position: absolute;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2563eb;
+    text-align: center;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metrics-number.rolling-up {
+    animation: rollUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.metrics-number.rolling-down {
+    animation: rollDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes rollUp {
+    0% {
+        transform: translateY(100%) rotateX(-90deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(0) rotateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rollDown {
+    0% {
+        transform: translateY(-100%) rotateX(90deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(0) rotateX(0);
+        opacity: 1;
+    }
+}
+
+.metrics-number::before {
+    content: attr(data-value);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+}
+
+.metrics-number::after {
+    content: attr(data-value);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateX(180deg);
+    backface-visibility: hidden;
+}
+
+.metrics-number.rolling-up::before {
+    animation: fadeOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.metrics-number.rolling-up::after {
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+} 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { API_URL } from '../config';
+import useApi from '../hooks/useApi';
 
 const Login = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
+    const { loading, error: apiError, post } = useApi();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -27,10 +27,9 @@ const Login = () => {
         setSuccess('');
 
         try {
-            const response = await axios.post(`${API_URL}/auth/login`, formData);
-            
+            const response = await post('/auth/login', formData);
             setSuccess('Login successful!');
-            login(response.data.user, response.data.token);
+            login(response.user, response.token);
             navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.error || 'Login failed. Please try again.');
@@ -45,9 +44,9 @@ const Login = () => {
                         Sign in to your account
                     </h2>
                 </div>
-                {error && (
+                {(error || apiError) && (
                     <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span className="block sm:inline">{error}</span>
+                        <span className="block sm:inline">{error || apiError}</span>
                     </div>
                 )}
                 {success && (
@@ -88,9 +87,19 @@ const Login = () => {
                     <div>
                         <button
                             type="submit"
-                            className="btn btn-primary w-full"
-                        >
-                            Sign in
+                            disabled={loading}
+                            className="btn btn-primary w-full">
+                            {loading ? (
+                                <span className="flex items-center justify-center">
+                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Signing in...
+                                </span>
+                            ) : (
+                                'Sign in'
+                            )}
                         </button>
                     </div>
                 </form>

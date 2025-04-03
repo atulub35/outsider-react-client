@@ -1,9 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { API_URL } from '../config'
 import Modal from './Modal'
+import useApi from '../hooks/useApi'
+
+const PostSkeleton = () => (
+    <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">
+        <div className="flex justify-between items-start mb-4">
+            <div className="h-6 bg-gray-200 rounded w-1/3"></div>
+            <div className="flex space-x-2">
+                <div className="h-4 bg-gray-200 rounded w-12"></div>
+                <div className="h-4 bg-gray-200 rounded w-12"></div>
+            </div>
+        </div>
+        <div className="space-y-3 mb-4">
+            <div className="h-4 bg-gray-200 rounded w-full"></div>
+            <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+            <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+        </div>
+        <div className="flex items-center justify-between">
+            <div className="h-4 bg-gray-200 rounded w-24"></div>
+            <div className="h-4 bg-gray-200 rounded w-12"></div>
+        </div>
+    </div>
+)
 
 const Posts = () => {
+    const { loading, error, get, post, put, delete: del } = useApi();
     const [posts, setPosts] = useState([])
     const [newPost, setNewPost] = useState({ title: '', content: '' })
     const [editingPost, setEditingPost] = useState(null)
@@ -12,23 +34,25 @@ const Posts = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [postToDelete, setPostToDelete] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         fetchPosts()
     }, [])
 
     const fetchPosts = async (query = '') => {
+        setIsLoading(true)
         try {
             const url = query 
-                ? `${API_URL}/posts?query=${encodeURIComponent(query)}`
-                : `${API_URL}/posts`
+                ? `/posts?query=${encodeURIComponent(query)}`
+                : '/posts'
             
-            const response = await axios.get(url, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            })
-            setPosts(response.data)
+            const data = await get(url)
+            setPosts(data)
         } catch (error) {
             console.error('Error fetching posts:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -47,9 +71,7 @@ const Posts = () => {
     const handleCreatePost = async (e) => {
         e.preventDefault()
         try {
-            await axios.post(`${API_URL}/posts`, newPost, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            })
+            await post('/posts', newPost)
             setNewPost({ title: '', content: '' })
             setIsCreateModalOpen(false)
             fetchPosts(searchQuery)
@@ -61,9 +83,7 @@ const Posts = () => {
     const handleUpdatePost = async (e) => {
         e.preventDefault()
         try {
-            await axios.put(`${API_URL}/posts/${editingPost.id}`, editingPost, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            })
+            await put(`/posts/${editingPost.id}`, editingPost)
             setEditingPost(null)
             fetchPosts()
         } catch (error) {
@@ -73,9 +93,7 @@ const Posts = () => {
 
     const handleDeletePost = async (postId) => {
         try {
-            await axios.delete(`${API_URL}/posts/${postId}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            })
+            await del(`/posts/${postId}`)
             setIsDeleteModalOpen(false)
             setPostToDelete(null)
             fetchPosts()
@@ -86,9 +104,7 @@ const Posts = () => {
 
     const handleLike = async (postId) => {
         try {
-            await axios.post(`${API_URL}/posts/${postId}/like`, {}, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            })
+            await post(`/posts/${postId}/like`, {})
             fetchPosts()
         } catch (error) {
             console.error('Error toggling like:', error)
@@ -117,7 +133,7 @@ const Posts = () => {
                         </div>
                         <button
                             type="submit"
-                            disabled={isSearching}
+                            disabled={isSearching || loading}
                             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                         >
                             {isSearching ? 'Searching...' : 'Search'}
@@ -173,9 +189,10 @@ const Posts = () => {
                         </button>
                         <button
                             type="submit"
+                            disabled={loading}
                             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            Create Post
+                            {loading ? 'Creating...' : 'Create Post'}
                         </button>
                     </div>
                 </form>
@@ -205,7 +222,13 @@ const Posts = () => {
 
             {/* Posts List */}
             <div className="space-y-6">
-                {posts.length === 0 ? (
+                {isLoading ? (
+                    <>
+                        <PostSkeleton />
+                        <PostSkeleton />
+                        <PostSkeleton />
+                    </>
+                ) : posts.length === 0 ? (
                     <div className="text-center py-8 text-gray-500">
                         {isSearching ? 'Searching...' : 'No posts found'}
                     </div>
@@ -242,9 +265,10 @@ const Posts = () => {
                                     <div className="flex space-x-2">
                                         <button
                                             type="submit"
+                                            disabled={loading}
                                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                         >
-                                            Save
+                                            {loading ? 'Saving...' : 'Save'}
                                         </button>
                                         <button
                                             type="button"

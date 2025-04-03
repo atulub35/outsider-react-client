@@ -18,7 +18,7 @@ const Dashboard = () => {
                     </h1>
                     <button
                         onClick={handleLogout}
-                        className="btn btn-primary"
+                        className="btn btn-primary transition duration-300 transform hover:scale-105"
                     >
                         Logout
                     </button>
