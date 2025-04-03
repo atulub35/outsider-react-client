@@ -53,4 +53,37 @@
     border-radius: 4px;
     margin: 1rem 0;
     text-align: center;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    .users-list h2 {
+        color: #fff;
+    }
+
+    .user-card {
+        background: #1f2937;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-card h3 {
+        color: #fff;
+    }
+
+    .user-card p {
+        color: #9ca3af;
+    }
+
+    .loading {
+        color: #9ca3af;
+    }
+
+    .error-message {
+        background-color: #450a0a;
+        color: #fecaca;
+    }
 } 

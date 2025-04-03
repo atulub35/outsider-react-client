@@ -4,22 +4,22 @@ import Modal from './Modal'
 import useApi from '../hooks/useApi'
 
 const PostSkeleton = () => (
-    <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 animate-pulse">
         <div className="flex justify-between items-start mb-4">
-            <div className="h-6 bg-gray-200 rounded w-1/3"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
             <div className="flex space-x-2">
-                <div className="h-4 bg-gray-200 rounded w-12"></div>
-                <div className="h-4 bg-gray-200 rounded w-12"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-12"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-12"></div>
             </div>
         </div>
         <div className="space-y-3 mb-4">
-            <div className="h-4 bg-gray-200 rounded w-full"></div>
-            <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-            <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6"></div>
         </div>
         <div className="flex items-center justify-between">
-            <div className="h-4 bg-gray-200 rounded w-24"></div>
-            <div className="h-4 bg-gray-200 rounded w-12"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-12"></div>
         </div>
     </div>
 )
@@ -119,7 +119,7 @@ const Posts = () => {
     return (
         <div className="max-w-4xl mx-auto p-4">
             {/* Search Bar */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                 <div className="flex justify-between items-center">
                     <form onSubmit={handleSearch} className="flex gap-4 flex-1">
                         <div className="flex-1">
@@ -128,7 +128,7 @@ const Posts = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search posts by title or content..."
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                             />
                         </div>
                         <button
@@ -156,25 +156,25 @@ const Posts = () => {
             >
                 <form onSubmit={handleCreatePost}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                        <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
                             Title
                         </label>
                         <input
                             type="text"
                             value={newPost.title}
                             onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 dark:border-gray-600 leading-tight focus:outline-none focus:shadow-outline"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                        <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
                             Content
                         </label>
                         <textarea
                             value={newPost.content}
                             onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 dark:border-gray-600 leading-tight focus:outline-none focus:shadow-outline"
                             rows="4"
                             required
                         />
@@ -234,30 +234,30 @@ const Posts = () => {
                     </div>
                 ) : (
                     posts.map((post) => (
-                        <div key={post.id} className="bg-white rounded-lg shadow-md p-6">
+                        <div key={post.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                             {editingPost?.id === post.id ? (
                                 // Edit Form
                                 <form onSubmit={handleUpdatePost}>
                                     <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                                        <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
                                             Title
                                         </label>
                                         <input
                                             type="text"
                                             value={editingPost.title}
                                             onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 dark:border-gray-600 leading-tight focus:outline-none focus:shadow-outline"
                                             required
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                                        <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">
                                             Content
                                         </label>
                                         <textarea
                                             value={editingPost.content}
                                             onChange={(e) => setEditingPost({ ...editingPost, content: e.target.value })}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-white dark:bg-gray-700 dark:border-gray-600 leading-tight focus:outline-none focus:shadow-outline"
                                             rows="4"
                                             required
                                         />
@@ -283,19 +283,19 @@ const Posts = () => {
                                 // Post Display
                                 <>
                                     <div className="flex justify-between items-start mb-4">
-                                        <h3 className="text-xl font-bold">{post.title}</h3>
+                                        <h3 className="text-xl font-bold dark:text-white">{post.title}</h3>
                                         <div className="flex space-x-2">
                                             {(
                                                 <>
                                                     <button
                                                         onClick={() => setEditingPost(post)}
-                                                        className="text-blue-500 hover:text-blue-700"
+                                                        className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                                                     >
                                                         Edit
                                                     </button>
                                                     <button
                                                         onClick={() => openDeleteModal(post)}
-                                                        className="text-red-500 hover:text-red-700"
+                                                        className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
                                                     >
                                                         Delete
                                                     </button>
@@ -303,14 +303,14 @@ const Posts = () => {
                                             )}
                                         </div>
                                     </div>
-                                    <p className="text-gray-600 mb-4">{post.content}</p>
-                                    <div className="flex items-center justify-between text-sm text-gray-500">
+                                    <p className="text-gray-600 dark:text-gray-300 mb-4">{post.content}</p>
+                                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                                         <span>By {post.author_name}</span>
                                         <div className="flex items-center space-x-2">
                                             <button
                                                 onClick={() => handleLike(post.id)}
                                                 className={`flex items-center space-x-1 ${
-                                                    post.is_liked ? 'text-red-500' : 'text-gray-500'
+                                                    post.is_liked ? 'text-red-500 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
                                                 }`}
                                             >
                                                 <span>❤️</span>

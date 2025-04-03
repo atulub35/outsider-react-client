@@ -56,18 +56,16 @@ const UsersList = () => {
     }
 
     return (
-        <div className="bg-white shadow rounded-lg">
-            <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-900">All Users</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        <div className="mt-8">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Users</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {users.map((user) => (
-                    <div
-                        key={user.id}
-                        className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
-                    >
-                        <h3 className="text-lg font-medium text-gray-900 mb-2">{user.name}</h3>
-                        <p className="text-gray-600">{user.email}</p>
+                    <div key={user.id} className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow">
+                        <h4 className="font-medium text-gray-800 dark:text-white">{user.name}</h4>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm">{user.email}</p>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
+                            Joined: {new Date(user.createdAt).toLocaleDateString()}
+                        </p>
                     </div>
                 ))}
             </div>

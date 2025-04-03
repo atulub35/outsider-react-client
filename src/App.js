@@ -8,6 +8,7 @@ import Header from './components/Header'
 import Posts from './components/Posts'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 import Home from './components/Home'
 
 // Auth route wrapper
@@ -25,50 +26,52 @@ const AuthRoute = ({ children }) => {
 
 function App() {
     return (
-        <AuthProvider>
-            <Router>
-                <div className="min-h-screen bg-gray-50">
-                    <Header />
-                    <main>
-                        <Routes>
-                            <Route
-                                path="/login"
-                                element={
-                                    <AuthRoute>
-                                        <Login />
-                                    </AuthRoute>
-                                }
-                            />
-                            <Route
-                                path="/signup"
-                                element={
-                                    <AuthRoute>
-                                        <SignUp />
-                                    </AuthRoute>
-                                }
-                            />
-                            <Route path="/" element={<Home />} />
-                            <Route
-                                path="/dashboard"
-                                element={
-                                    <ProtectedRoute>
-                                        <Dashboard />
-                                    </ProtectedRoute>
-                                }
-                            />
-                            <Route
-                                path="/posts"
-                                element={
-                                    <ProtectedRoute>
-                                        <Posts />
-                                    </ProtectedRoute>
-                                }
-                            />
-                        </Routes>
-                    </main>
-                </div>
-            </Router>
-        </AuthProvider>
+        <ThemeProvider>
+            <AuthProvider>
+                <Router>
+                    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+                        <Header />
+                        <main>
+                            <Routes>
+                                <Route
+                                    path="/login"
+                                    element={
+                                        <AuthRoute>
+                                            <Login />
+                                        </AuthRoute>
+                                    }
+                                />
+                                <Route
+                                    path="/signup"
+                                    element={
+                                        <AuthRoute>
+                                            <SignUp />
+                                        </AuthRoute>
+                                    }
+                                />
+                                <Route path="/" element={<Home />} />
+                                <Route
+                                    path="/dashboard"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Dashboard />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                                <Route
+                                    path="/posts"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Posts />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                            </Routes>
+                        </main>
+                    </div>
+                </Router>
+            </AuthProvider>
+        </ThemeProvider>
     )
 }
 

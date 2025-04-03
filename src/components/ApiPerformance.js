@@ -50,27 +50,27 @@ const ApiPerformance = () => {
     }, []);
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-lg">
-            <h3 className="text-2xl font-semibold text-blue-600 mb-6">API Performance Metrics</h3>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+            <h3 className="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-6">API Performance Metrics</h3>
             <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-gray-700">Response Time</h4>
+                <div className="p-4 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                    <h4 className="font-medium text-gray-700 dark:text-gray-300">Response Time</h4>
                     <MetricValue value={metrics.responseTime} unit="ms" />
                 </div>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-gray-700">Requests/Second</h4>
+                <div className="p-4 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                    <h4 className="font-medium text-gray-700 dark:text-gray-300">Requests/Second</h4>
                     <MetricValue value={metrics.requestsPerSecond} unit="" />
                 </div>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-gray-700">Active Connections</h4>
+                <div className="p-4 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                    <h4 className="font-medium text-gray-700 dark:text-gray-300">Active Connections</h4>
                     <MetricValue value={metrics.activeConnections} unit="" />
                 </div>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-gray-700">Memory Usage</h4>
+                <div className="p-4 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                    <h4 className="font-medium text-gray-700 dark:text-gray-300">Memory Usage</h4>
                     <MetricValue value={metrics.totalMemory} unit="MB" />
                 </div>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-gray-700">Free Memory</h4>
+                <div className="p-4 bg-blue-50 dark:bg-gray-700 rounded-lg">
+                    <h4 className="font-medium text-gray-700 dark:text-gray-300">Free Memory</h4>
                     <MetricValue value={metrics.freeMemory} unit="MB" />
                 </div>
             </div>
