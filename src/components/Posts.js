@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useAuth } from '../context/AuthContext'
 import { API_URL } from '../config'
 import Modal from './Modal'
-console.log('Process env', process.env.NODE_ENV);
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -14,7 +12,6 @@ const Posts = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [postToDelete, setPostToDelete] = useState(null)
-    const { user } = useAuth()
 
     useEffect(() => {
         fetchPosts()
