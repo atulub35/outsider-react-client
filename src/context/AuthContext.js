@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext(null)
 
@@ -11,13 +12,20 @@ export const AuthProvider = ({ children }) => {
         console.log('token found', token)
         
         if (token) {
-            setIsAuthenticated(true)
-            // You could also fetch user data here if needed
+            try {
+                const decodedToken = jwtDecode(token)
+                console.log('decodedToken', decodedToken)
+                setUser(decodedToken)
+                setIsAuthenticated(true)
+            } catch (error) {
+                console.error('Error decoding token:', error)
+                // If token is invalid, clear it
+                localStorage.removeItem('token')
+            }
         }
     }, [])
 
     const login = (userData, token) => {
-        console.log('login data', userData, token)
         
         localStorage.setItem('token', token)
         setUser(userData)
