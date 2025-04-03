@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
+import { API_URL } from '../config'
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -17,8 +18,8 @@ const Posts = () => {
     const fetchPosts = async (query = '') => {
         try {
             const url = query 
-                ? `http://localhost:3000/posts?query=${encodeURIComponent(query)}`
-                : 'http://localhost:3000/posts'
+                ? `${API_URL}/posts?query=${encodeURIComponent(query)}`
+                : `${API_URL}/posts`
             
             const response = await axios.get(url, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -44,11 +45,11 @@ const Posts = () => {
     const handleCreatePost = async (e) => {
         e.preventDefault()
         try {
-            await axios.post('http://localhost:3000/posts', newPost, {
+            await axios.post(`${API_URL}/posts`, newPost, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             setNewPost({ title: '', content: '' })
-            fetchPosts(searchQuery) // Keep the current search query when refreshing
+            fetchPosts(searchQuery)
         } catch (error) {
             console.error('Error creating post:', error)
         }
@@ -57,7 +58,7 @@ const Posts = () => {
     const handleUpdatePost = async (e) => {
         e.preventDefault()
         try {
-            await axios.put(`http://localhost:3000/posts/${editingPost.id}`, editingPost, {
+            await axios.put(`${API_URL}/posts/${editingPost.id}`, editingPost, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             setEditingPost(null)
@@ -69,7 +70,7 @@ const Posts = () => {
 
     const handleDeletePost = async (postId) => {
         try {
-            await axios.delete(`http://localhost:3000/posts/${postId}`, {
+            await axios.delete(`${API_URL}/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             fetchPosts()
@@ -80,7 +81,7 @@ const Posts = () => {
 
     const handleLike = async (postId) => {
         try {
-            await axios.post(`http://localhost:3000/posts/${postId}/like`, {}, {
+            await axios.post(`${API_URL}/posts/${postId}/like`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
             fetchPosts()
