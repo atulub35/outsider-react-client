@@ -10,6 +10,19 @@ A modern React-based client application built with Create React App, featuring R
 - Testing setup with React Testing Library
 - Modern development environment with Create React App
 
+
+## Live Demo
+[https://outsider-284373f8936c.herokuapp.com](https://outsider-react-client-c8a7f976c7e3.herokuapp.com/)
+
+User Name
+```bash
+atul612@gmail.com
+```
+Password
+```bash
+12345678
+```
+
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
