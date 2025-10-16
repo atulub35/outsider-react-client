@@ -80,7 +80,7 @@ const Search = ({ isOpen, onClose }) => {
                                     {results.posts.map(post => (
                                         <button
                                             key={post.id}
-                                            onClick={() => handleResultClick('posts', post.id)}
+                                            onClick={() => handleResultClick('post', post.id)}
                                             className="w-full text-left p-2 font-bold dark:text-white rounded-lg transition-colors"
                                         >
                                             <div className="font-medium">{post.title}</div>

@@ -105,10 +105,21 @@ const Posts = () => {
     const handleLike = async (postId) => {
         try {
             await post(`/posts/${postId}/like`, {})
-            fetchPosts()
+            updateLikes(postId)
+
         } catch (error) {
             console.error('Error toggling like:', error)
         }
+    }
+
+    const updateLikes = (postId) => {
+        setPosts((prev) => prev.map(post => 
+        {
+            if (post.id === postId) console.log('postId', post.is_liked);
+            
+            return post.id === postId ? {...post, ...{ is_liked: !post.is_liked }} : post
+        }
+        ))
     }
 
     const openDeleteModal = (post) => {
@@ -311,10 +322,14 @@ const Posts = () => {
                                                 onClick={() => handleLike(post.id)}
                                                 className={`flex items-center space-x-1 ${
                                                     post.is_liked ? 'text-red-500 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
-                                                }`}
-                                            >
-                                                <span>❤️</span>
-                                                <span>{post.likes_count}</span>
+                                                }`}>
+                                                {
+                                                    post.is_liked ? <>
+                                                    <span>👍</span>
+                                                    </>
+                                                    :
+                                                    <span>👎</span>
+                                                }
                                             </button>
                                         </div>
                                     </div>

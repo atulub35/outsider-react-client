@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import Home from './components/Home'
-
+import Post from './components/Post'
 // Auth route wrapper
 const AuthRoute = ({ children }) => {
     const { isAuthenticated } = useAuth()
@@ -63,6 +63,14 @@ function App() {
                                     element={
                                         <ProtectedRoute>
                                             <Posts />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                                <Route 
+                                    path="/post/:id"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Post />
                                         </ProtectedRoute>
                                     }
                                 />
