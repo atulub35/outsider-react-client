@@ -81,7 +81,7 @@ const Search = ({ isOpen, onClose }) => {
                                         <button
                                             key={post.id}
                                             onClick={() => handleResultClick('posts', post.id)}
-                                            className="w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                                            className="w-full text-left p-2 font-bold dark:text-white rounded-lg transition-colors"
                                         >
                                             <div className="font-medium">{post.title}</div>
                                             <div className="text-sm text-gray-500 truncate">{post.content}</div>
@@ -99,7 +99,7 @@ const Search = ({ isOpen, onClose }) => {
                                         <button
                                             key={user.id}
                                             onClick={() => handleResultClick('users', user.id)}
-                                            className="w-full text-left p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                                            className="w-full text-left p-2 font-bold dark:text-white rounded-lg transition-colors"
                                         >
                                             <div className="font-medium">{user.name}</div>
                                             <div className="text-sm text-gray-500">{user.email}</div>

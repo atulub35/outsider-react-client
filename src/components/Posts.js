@@ -120,7 +120,7 @@ const Posts = () => {
         <div className="max-w-4xl mx-auto p-4">
             {/* Search Bar */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between">
                     <form onSubmit={handleSearch} className="flex gap-4 flex-1">
                         <div className="flex-1">
                             <input
@@ -134,14 +134,14 @@ const Posts = () => {
                         <button
                             type="submit"
                             disabled={isSearching || loading}
-                            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                            className="text-sm px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                         >
                             {isSearching ? 'Searching...' : 'Search'}
                         </button>
                     </form>
                     <button
                         onClick={() => setIsCreateModalOpen(true)}
-                        className="ml-4 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="ml-4 text-sm px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
                         Create Post
                     </button>
