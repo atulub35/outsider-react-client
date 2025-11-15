@@ -9,7 +9,7 @@ const Search = ({ isOpen, onClose }) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState({
         posts: [],
-        users: []
+        // users: []
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +27,7 @@ const Search = ({ isOpen, onClose }) => {
     useEffect(() => {
         const search = async () => {
             if (!query.trim()) {
-                setResults({ posts: [], users: [] });
+                setResults({ posts: [] });
                 return;
             }
 
@@ -35,11 +35,11 @@ const Search = ({ isOpen, onClose }) => {
             try {
                 const [postsResponse, usersResponse] = await Promise.all([
                     get(`/posts?query=${encodeURIComponent(query)}`),
-                    get(`/users?query=${encodeURIComponent(query)}`)
+                    // get(`/users?query=${encodeURIComponent(query)}`)
                 ]);
                 setResults({
                     posts: postsResponse,
-                    users: usersResponse
+                    // users: usersResponse
                 });
             } catch (error) {
                 console.error('Error searching:', error);
@@ -91,25 +91,7 @@ const Search = ({ isOpen, onClose }) => {
                             </div>
                         )}
                         
-                        {results.users.length > 0 && (
-                            <div>
-                                <h3 className="text-sm font-medium text-gray-500 mb-2">Users</h3>
-                                <div className="space-y-2">
-                                    {results.users.map(user => (
-                                        <button
-                                            key={user.id}
-                                            onClick={() => handleResultClick('users', user.id)}
-                                            className="w-full text-left p-2 font-bold dark:text-white rounded-lg transition-colors"
-                                        >
-                                            <div className="font-medium">{user.name}</div>
-                                            <div className="text-sm text-gray-500">{user.email}</div>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                        
-                        {!isLoading && query && results.posts.length === 0 && results.users.length === 0 && (
+                        {!isLoading && query && results.posts.length === 0 && (
                             <div className="text-center text-gray-500">No results found</div>
                         )}
                     </div>

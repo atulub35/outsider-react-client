@@ -2,6 +2,25 @@ import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
 
+// Create axios instance with interceptor for global 401 handling
+const apiClient = axios.create({
+    baseURL: API_URL,
+});
+
+// Set up response interceptor to handle 401 errors globally
+apiClient.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Token is invalid or expired
+            localStorage.removeItem('token');
+            // Redirect to login page
+            window.location.href = '/login';
+        }
+        return Promise.reject(error);
+    }
+);
+
 const useApi = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -15,12 +34,15 @@ const useApi = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${API_URL}${endpoint}`, {
+            const response = await apiClient.get(endpoint, {
                 headers: getAuthHeader()
             });
             return response.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'An error occurred');
+            // 401 errors are handled by interceptor, but we still need to handle other errors
+            if (err.response?.status !== 401) {
+                setError(err.response?.data?.message || 'An error occurred');
+            }
             throw err;
         } finally {
             setLoading(false);
@@ -31,12 +53,14 @@ const useApi = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.post(`${API_URL}${endpoint}`, data, {
+            const response = await apiClient.post(endpoint, data, {
                 headers: getAuthHeader()
             });
             return response.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'An error occurred');
+            if (err.response?.status !== 401) {
+                setError(err.response?.data?.message || 'An error occurred');
+            }
             throw err;
         } finally {
             setLoading(false);
@@ -47,12 +71,14 @@ const useApi = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.put(`${API_URL}${endpoint}`, data, {
+            const response = await apiClient.put(endpoint, data, {
                 headers: getAuthHeader()
             });
             return response.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'An error occurred');
+            if (err.response?.status !== 401) {
+                setError(err.response?.data?.message || 'An error occurred');
+            }
             throw err;
         } finally {
             setLoading(false);
@@ -63,12 +89,14 @@ const useApi = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.delete(`${API_URL}${endpoint}`, {
+            const response = await apiClient.delete(endpoint, {
                 headers: getAuthHeader()
             });
             return response.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'An error occurred');
+            if (err.response?.status !== 401) {
+                setError(err.response?.data?.message || 'An error occurred');
+            }
             throw err;
         } finally {
             setLoading(false);
