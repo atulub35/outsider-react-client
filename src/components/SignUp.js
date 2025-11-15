@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import useApi from '../hooks/useApi';
 
@@ -52,6 +52,11 @@ const SignUp = () => {
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
+                    <div className="flex items-center justify-center">
+                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                         Create your account
                     </h2>
@@ -142,6 +147,14 @@ const SignUp = () => {
                         </button>
                     </div>
                 </form>
+                <p className="mt-6 text-center text-sm/6 text-gray-400">
+                    {"Already have an account? "}
+                    <NavLink 
+                        to="/login" 
+                        className="font-semibold text-indigo-400 hover:text-indigo-300">
+                        Sign In
+                    </NavLink>
+                </p>
             </div>
         </div>
     );

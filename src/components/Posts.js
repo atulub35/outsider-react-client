@@ -145,14 +145,14 @@ const Posts = () => {
                         <button
                             type="submit"
                             disabled={isSearching || loading}
-                            className="text-sm px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                            className="text-sm px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                         >
                             {isSearching ? 'Searching...' : 'Search'}
                         </button>
                     </form>
                     <button
                         onClick={() => setIsCreateModalOpen(true)}
-                        className="ml-4 text-sm px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="ml-4 text-sm px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 hover:text-white focus:ring-blue-500 disabled:opacity-50"
                     >
                         Create Post
                     </button>
@@ -277,14 +277,14 @@ const Posts = () => {
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                            className="text-sm px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 hover:text-white focus:ring-blue-500 disabled:opacity-50"
                                         >
                                             {loading ? 'Saving...' : 'Save'}
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => setEditingPost(null)}
-                                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                            className="text-sm px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                                         >
                                             Cancel
                                         </button>
