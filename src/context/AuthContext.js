@@ -24,23 +24,10 @@ export const AuthProvider = ({ children }) => {
             }
 
             // Validate token with backend by making an authenticated request
-            // Try a common endpoint that requires authentication
-            // You can adjust this endpoint based on your backend API
-            const response = await axios.get(`${API_URL}/auth/me`, {
+            await axios.get(`${API_URL}/api/metrics`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            }).catch(async (error) => {
-                // If /auth/me doesn't exist, try /api/metrics or another endpoint
-                if (error.response?.status === 404) {
-                    // Try alternative endpoint
-                    return await axios.get(`${API_URL}/api/metrics`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    })
-                }
-                throw error
             })
 
             // If we get here, token is valid

@@ -64,7 +64,7 @@ const UsersList = () => {
                         <h4 className="font-medium text-gray-800 dark:text-white">{user.name}</h4>
                         <p className="text-gray-600 dark:text-gray-300 text-sm">{user.email}</p>
                         <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                            Joined: {new Date(user.createdAt).toLocaleDateString()}
+                            Joined: {new Date(user.created_at).toLocaleDateString()}
                         </p>
                     </div>
                 ))}

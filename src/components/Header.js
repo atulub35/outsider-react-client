@@ -22,7 +22,12 @@ const Header = () => {
         return () => window.removeEventListener('keydown', handleKeyDown)
     }, [])
 
+    const handleLogout = () => {
+        logout();
+    };
+
     return (
+        isAuthenticated && (
         <header className="sticky top-0 z-40 flex h-16 justify-between border-b bg-white px-4 dark:bg-gray-900 dark:border-gray-700">
             <div className="flex w-full select-none flex-row items-center">
                 {/* Logo and Brand */}
@@ -172,11 +177,11 @@ const Header = () => {
                         )}
                     </button>
                     <button
-                        className="inline-flex items-center justify-center gap-2 rounded-md bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                        type="button"
-                        aria-label="Open feedback form"
-                    >
-                        Feedback
+                        onClick={handleLogout}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -265,7 +270,7 @@ const Header = () => {
             {/* Search Modal */}
             <Search isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
         </header>
-    )
+    ))
 }
 
 export default Header 
